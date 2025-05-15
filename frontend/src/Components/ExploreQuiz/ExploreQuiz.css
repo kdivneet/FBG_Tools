@@ -1,0 +1,68 @@
+.quiz-container {
+    position: relative;
+    height: 100vh;
+  /* Dark background color */
+    overflow: hidden;
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+  }
+
+  
+  
+  
+  /* Styles for the quiz content (on top of the particles) */
+  .quiz-page {
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    z-index: 1; /* Ensure the content is above the particles */
+  }
+  
+  /* Heading styles */
+  .quiz-heading {
+    font-size: 2.5rem;
+    color: #1e88e5; /* Blue color */
+    margin-bottom: 10px;
+  }
+  
+  /* Subheading styles */
+  .quiz-subheading {
+    font-size: 1.2rem;
+    color: #616161; /* Darker gray */
+    margin-bottom: 30px;
+  }
+  
+  /* Styling for the "coming soon" section (if you plan to use it later) */
+  .coming-soon {
+    font-size: 1.1rem;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+  }
+  
+  /* The container for the particles */
+  .particle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Place the particles behind the content */
+    pointer-events: none; /* Disable interaction with the particles */
+  }
+  
+  /* Additional styles for particles to blend with the page */
+  #tsparticles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent; /* Transparent background */
+  }
+  

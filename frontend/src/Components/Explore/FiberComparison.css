@@ -1,0 +1,91 @@
+/* Allow scrolling in both directions */
+.fiber-comp-container {
+  position: relative;
+  margin-top: 80px; /* Adjust space between navbar and content */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top */
+  z-index: 0;
+  overflow: auto; /* Allow both horizontal and vertical scrolling */
+  width: 100%; /* Ensure it takes full width */
+  min-height: 100vh; /* Ensure it takes at least the full height of the viewport */
+}
+
+/* Styles for the fiber comparison content (on top of the particles) */
+.temp-form-container {
+  padding: 40px;
+  text-align: center;
+  position: relative;
+  z-index: 1; /* Ensure the content is above the particles */
+  max-width: 700px; /* Limit width to prevent excessive stretch on larger screens */
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #f8f9fc;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Form styling */
+.temp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Form group and inputs */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+input[type="number"] {
+  padding: 0.5rem;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* Button styling */
+button {
+  padding: 0.6rem 1.2rem;
+  background-color: #0077ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #005fcc;
+}
+
+/* Graph container styles */
+.graph-container {
+  margin-top: 2rem;
+  max-width: 100%;  /* Ensure the graph doesn't overflow horizontally */
+}
+
+.graph-container img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* Error message styling */
+.error-text {
+  color: red;
+  margin-top: 1rem;
+}
+
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Space between temperature and strain boxes */
+  align-items: center;
+}

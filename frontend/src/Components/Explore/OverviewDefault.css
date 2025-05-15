@@ -1,0 +1,129 @@
+.overview-default {
+    padding: 1rem;
+    background: #fff;
+    line-height: 1.6;
+  }
+  
+  .overview-default h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #003366;
+  }
+  
+  .overview-section {
+    margin-bottom: 2rem;
+  }
+  
+  .overview-section h2 {
+    font-size: 1.4rem;
+    color: #444;
+  }
+  
+  .overview-section img,
+  .overview-section video {
+    max-width: 100%;
+    margin-top: 1rem;
+    border-radius: 8px;
+  }
+  
+  figcaption {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 0.5rem;
+  }
+  
+  ul {
+    padding-left: 1.2rem;
+  }
+  
+  blockquote {
+    background-color: #fff3cd;
+    padding: 1rem;
+    border-left: 4px solid #ffc107;
+    margin-top: 1rem;
+    font-style: italic;
+  }
+  
+  .bonus a {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  .overview-default {
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.7;
+  }
+  
+  .animated-heading {
+    font-size: 2rem;
+    color: #3e3dff;
+    margin-bottom: 1rem;
+    border-left: 6px solid #6c63ff;
+    padding-left: 0.75rem;
+    animation: fadeInSlide 0.6s ease-in-out forwards;
+  }
+  
+  .styled-img {
+    max-width: 100%;
+    border-radius: 1rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .styled-video {
+    width: 100%;
+    border-radius: 0.75rem;
+    margin: 1rem 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  .fancy-list {
+    list-style: none;
+    padding-left: 1rem;
+  }
+  
+  .fancy-list li {
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+  }
+  
+  .highlight-paragraph {
+    background: #f0f4ff;
+    padding: 1rem;
+    border-left: 4px solid #6c63ff;
+    border-radius: 0.5rem;
+    font-style: italic;
+    box-shadow: 0 0 10px rgba(108, 99, 255, 0.1);
+  }
+  
+  .equation-box {
+    background-color: #f1f0ff;
+    border-left: 4px solid #6c63ff;
+    padding: 0.75rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+  }
+  
+  .highlight-quote {
+    font-style: italic;
+    background-color: #fffbe6;
+    border-left: 5px solid orange;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    font-weight: 600;
+  }
+  
+  @keyframes fadeInSlide {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  

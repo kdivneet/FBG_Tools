@@ -1,0 +1,45 @@
+.rhs-container {
+    width: 300px;
+    padding: 20px;
+    border-left: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+  }
+  
+  .rhs-container h4 {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .rhs-container hr {
+    border: none;
+    border-top: 1px solid #000;
+    margin-bottom: 10px;
+  }
+  
+  .download-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: #000;
+  }
+  
+  .related-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .related-list li {
+    margin-bottom: 10px;
+  }
+  
+  .related-list a {
+    text-decoration: none;
+    color: #0047ab;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .related-list a:hover {
+    text-decoration: underline;
+  }
+  
