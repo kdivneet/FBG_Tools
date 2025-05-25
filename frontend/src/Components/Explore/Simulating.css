@@ -1,0 +1,198 @@
+
+
+/* Container for the whole simulator */
+.fbg-simulator-container {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px); /* viewport height minus navbar */
+  background: linear-gradient(120deg, #f0f4f8, #d9e2ec);
+}
+
+/* Header */
+.fbg-simulator-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Each simulation card with dark border */
+.simulation-card {
+  border: none;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 
+    8px 8px 15px rgba(0, 0, 0, 0.1), /* bottom-right shadow */
+   -8px 8px 15px rgba(0, 0, 0, 0.05), /* bottom-left shadow */
+    8px -8px 15px rgba(255, 255, 255, 0.7), /* top-right highlight */
+   -8px -8px 15px rgba(255, 255, 255, 0.7); /* top-left highlight */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.simulation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    12px 12px 20px rgba(0, 0, 0, 0.15), /* enhanced bottom-right shadow */
+   -12px 12px 20px rgba(0, 0, 0, 0.1), /* enhanced bottom-left shadow */
+    12px -12px 20px rgba(255, 255, 255, 0.8), /* enhanced top-right highlight */
+   -12px -12px 20px rgba(255, 255, 255, 0.8); /* enhanced top-left highlight */
+}
+
+
+
+/* Input groups inside simulation card */
+.input-group {
+  margin-bottom: 0.6rem;
+}
+
+/* Labels for inputs */
+.input-group label {
+  font-weight: 600;
+}
+
+/* Inputs styling */
+.input-group input[type="number"] {
+  width: 100px;
+  margin-left: 0.5rem;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Info lines like Bragg Wavelength and range */
+.sim-info {
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* Buttons container inside simulation */
+.sim-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Buttons styling inside simulation card */
+.sim-buttons button {
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.sim-buttons button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.sim-buttons button:disabled {
+  background-color: #a3a3a3;
+  cursor: not-allowed;
+}
+
+/* Remove button style */
+.sim-buttons button.remove-btn {
+  background-color: #ff4d4d;
+}
+
+.sim-buttons button.remove-btn:hover {
+  background-color: #cc0000;
+}
+
+/* Common styling for add, simulate all, and reset all buttons */
+.common-action-btn {
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 20px; /* Rounded for a pill shape */
+  color: white;
+  margin-bottom: 2rem;
+  transition: background-color 0.3s ease;
+}
+
+/* Add Simulation button */
+.add-sim-btn {
+  background-color: #28a745;
+}
+
+.add-sim-btn:hover {
+  background-color: #1e7e34;
+}
+
+/* Simulate All button */
+.simulate-all-btn {
+  background-color: #17a2b8;
+  margin-left: 1rem;
+}
+
+.simulate-all-btn:hover {
+  background-color: #117a8b;
+}
+
+/* Reset All button */
+.reset-all-btn {
+  background-color: #dc3545; /* red-ish */
+  margin-left: 1rem;
+}
+
+.reset-all-btn:hover {
+  background-color: #bd2130;
+}
+
+/* Chart container */
+.chart-container {
+  width: 100%;
+  height: 500px;
+  margin-bottom: 2rem;
+  
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  user-select: none;
+  cursor: default;
+}
+
+.app-header h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #007bff, #00c6ff, #007bff);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease infinite;
+  transition: transform 0.3s ease;
+}
+
+.app-header h1:hover {
+  animation-play-state: paused;
+  transform: scale(1.05);
+  text-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #555;
+  margin-top: 0.3rem;
+  font-style: italic;
+}
+
+/* Keyframes for gradient shift */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
