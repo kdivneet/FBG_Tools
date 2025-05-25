@@ -11,6 +11,7 @@ from flask_cors import CORS
 import joblib
 import torch
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
+from scipy.linalg import expm
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend communication
@@ -283,6 +284,123 @@ def strain_bragg_shift():
     return jsonify({'imagePath': 'results/strain_bragg_shift.png'})
 
 
+
+@app.route('/grating', methods=['POST'])
+def grating_simulation():
+    data = request.get_json()
+    grating_type = data.get("gratingType", "uniform")
+    parameters = data.get("parameters", {})
+
+    # Default physical parameters
+    L = float(parameters.get("length", 10))  # Grating length in mm
+    n_eff = float(parameters.get("refractiveIndex", 1.45))  # Effective refractive index
+    delta_n = float(parameters.get("deltaN", 0.0005))  # Index modulation amplitude
+    period = float(parameters.get("period", 0.53))  # Grating period in microns (um)
+
+    # Convert length to meters for calculation convenience (assuming input is mm)
+    L_m = L * 1e-3  
+    period_m = period * 1e-6  # microns to meters
+
+    # Bragg wavelength lambda_B = 2 * n_eff * period
+    lambda_B = 2 * n_eff * period_m * 1e9  # Convert to nm for output scale
+
+    # Wavelength range (in nm)
+    wavelengths = np.linspace(lambda_B - 20, lambda_B + 20, 300)
+
+    # Initialize arrays for reflectivity
+    reflected = np.zeros_like(wavelengths, dtype=float)
+
+    # Calculate coupling coefficient kappa
+    # kappa = pi * delta_n / lambda_B (converted to meters)
+    kappa = np.pi * delta_n / (lambda_B * 1e-9)  # in inverse meters
+
+    for i, wl_nm in enumerate(wavelengths):
+        # Calculate detuning parameter sigma
+        wl_m = wl_nm * 1e-9
+        sigma = (np.pi * n_eff / (lambda_B * 1e-9)**2) * (wl_m - lambda_B * 1e-9)
+
+        gamma = np.sqrt(kappa**2 - sigma**2 + 0j)  # add 0j to allow complex sqrt
+
+        if np.abs(gamma) == 0:
+            R = 0
+        else:
+            # Reflectivity formula from coupled mode theory
+            numerator = np.sinh(gamma * L_m) ** 2
+            denominator = np.cosh(gamma * L_m) ** 2 - (sigma ** 2) / (kappa ** 2)
+            R = np.abs(numerator / denominator)
+
+        # Modify reflectivity for different grating types
+        if grating_type == "chirped":
+            # Chirped gratings have varying period -> broadened peak
+            chirp_factor = 1 + 0.1 * (wl_nm - lambda_B) / 20
+            R *= np.exp(-((wl_nm - lambda_B) ** 2) / (2 * (5 * chirp_factor) ** 2))
+        elif grating_type == "apodized":
+            # Apodization reduces sidelobes: apply smooth envelope
+            apod = np.sin(np.pi * (i / len(wavelengths))) ** 2
+            R *= apod
+        elif grating_type == "sampled":
+            # Sampled gratings create periodic modulation
+            sampled_mod = (np.sin(5 * np.pi * (wl_nm - lambda_B) / 20)) ** 2
+            R *= sampled_mod
+        elif grating_type == "strain_tuned":
+            # Strain shifts lambda_B by some factor (simulate strain)
+            strain_shift = 0.5  # nm strain shift (example)
+            if abs(wl_nm - (lambda_B + strain_shift)) > 10:
+                R *= 0.1  # reduce reflectivity away from shifted peak
+
+        # Clamp reflectivity between 0 and 1
+        reflected[i] = np.clip(R.real, 0, 1)
+
+    transmitted = 1 - reflected
+
+    # Prepare response JSON
+    reflected_data = [{"wavelength": float(w), "intensity": float(r)} for w, r in zip(wavelengths, reflected)]
+    transmitted_data = [{"wavelength": float(w), "intensity": float(t)} for w, t in zip(wavelengths, transmitted)]
+
+    return jsonify({
+        "reflected": reflected_data,
+        "transmitted": transmitted_data,
+        "centerWavelength": lambda_B
+    })
+@app.route('/simulate', methods=['POST'])
+def simulate():
+    try:
+        data = request.get_json()
+        # Validate required fields
+        required_fields = ["lambda_start", "lambda_end", "num_points", "delta_n", "grating_period", "fbg_length", "n_eff"]
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"error": f"Missing parameter: {field}"}), 400
+
+        lambda_start = float(data["lambda_start"])
+        lambda_end = float(data["lambda_end"])
+        num_points = int(data["num_points"])
+        delta_n = float(data["delta_n"])
+        grating_period = float(data["grating_period"])
+        fbg_length = float(data["fbg_length"])
+        n_eff = float(data["n_eff"])
+
+        wavelengths = np.linspace(lambda_start, lambda_end, num_points)
+        reflection = []
+
+        for lam in wavelengths:
+            kappa = np.pi * delta_n / lam
+            delta_beta = 2 * np.pi * n_eff / lam - np.pi / grating_period
+            M = np.array([
+                [1j * delta_beta, kappa],
+                [-kappa, -1j * delta_beta]
+            ])
+            M_L = expm(M * fbg_length)
+            r = -M_L[1, 0] / M_L[0, 0]
+            reflection.append(np.abs(r) ** 2)
+
+        return jsonify({
+            "wavelengths": wavelengths.tolist(),
+            "reflection": reflection
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
